@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRight, Clock, Check, HelpCircle, Calendar, Shield, Zap, Sparkles } from "lucide-react";
+import { ArrowRight, Clock, Check, HelpCircle, Calendar, Shield, Sparkles } from "lucide-react";
 // Opcional: npm i react-calendly se quiseres o popup nativo
 // import { openPopupWidget } from "react-calendly";
 
@@ -16,9 +16,9 @@ export function Pricing() {
   // Substitui pelo link real do teu evento do Calendly
   const CALENDLY_URL = "https://calendly.com/O_TEU_LINK_AQUI";
 
-  const handleScheduling = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+
+  const handleScheduling = () => {
     // Se quiseres usar o widget de popup do react-calendly, descomenta as linhas abaixo:
-    // e.preventDefault();
     // openPopupWidget({ url: CALENDLY_URL });
   };
 
