@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
-import { Calendar, Clock, User, Mail, Phone, ArrowRight, CheckCircle, XCircle, ChevronLeft, ChevronRight, Zap } from "lucide-react";
+import { User, Mail, Phone, ArrowRight, CheckCircle, XCircle, ChevronLeft, ChevronRight } from "lucide-react";
 
 const WEBHOOK_URL = "https://hook.eu1.make.com/1rt54lt4omk2x0d5ndv8gb1ptan5r7gg";
 const DURACAO_MINUTOS = 20;
