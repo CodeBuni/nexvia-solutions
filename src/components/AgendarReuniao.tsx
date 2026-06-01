@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
-import { User, Mail, Phone, ArrowRight, CheckCircle, XCircle, ChevronLeft, ChevronRight } from "lucide-react";
+import { User, Mail, Phone, ArrowRight, CheckCircle, XCircle, ChevronLeft, ChevronRight, Calendar, MessageCircle } from "lucide-react";
 
 const WEBHOOK_URL = "https://hook.eu1.make.com/1rt54lt4omk2x0d5ndv8gb1ptan5r7gg";
 const DURACAO_MINUTOS = 20;
@@ -25,13 +25,13 @@ function gerarSlots(data: Date): string[] {
 function mudarMes(data: Date, meses: number): Date {
   const nova = new Date(data.getFullYear(), data.getMonth() + meses, 1);
   return nova;
-} 
+}
 
 const DIAS_SEMANA = ["D", "S", "T", "Q", "Q", "S", "S"];
 const MESES = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 
 export function AgendarReuniao() {
-  const [passo, setPasso] = useState<"data" | "hora" | "dados" | "sucesso" | "erro">("data");
+  const [passo, setPasso] = useState<"boasVindas" | "data" | "hora" | "dados" | "sucesso" | "erro">("boasVindas");
   const [dataSelecionada, setDataSelecionada] = useState<Date | null>(null);
   const [horaSelecionada, setHoraSelecionada] = useState<string | null>(null);
   const [nome, setNome] = useState("");
@@ -47,6 +47,13 @@ export function AgendarReuniao() {
     }
   }, []);
 
+  // Animar transição entre passos
+  useEffect(() => {
+    if (containerRef.current) {
+      gsap.fromTo(containerRef.current, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" });
+    }
+  }, [passo]);
+
   const ano = mesAtual.getFullYear();
   const mes = mesAtual.getMonth();
   const diasNoMes = new Date(ano, mes + 1, 0).getDate();
@@ -54,39 +61,38 @@ export function AgendarReuniao() {
   const hoje = new Date();
   hoje.setHours(0, 0, 0, 0);
 
-    const handleSubmit = async () => {
+  const handleSubmit = async () => {
     if (!dataSelecionada || !horaSelecionada) return;
     setLoading(true);
-    
-    // Formatar a data manualmente (sem UTC)
+
     const ano = dataSelecionada.getFullYear();
     const mes = String(dataSelecionada.getMonth() + 1).padStart(2, '0');
     const dia = String(dataSelecionada.getDate()).padStart(2, '0');
     const dataFormatada = `${ano}-${mes}-${dia}`;
-    
+
     try {
-        const response = await fetch(WEBHOOK_URL, {
+      const response = await fetch(WEBHOOK_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            nome,
-            email,
-            telefone,
-            data: dataFormatada,  // ← usa a data formatada manualmente
-            hora: horaSelecionada,
-            duracao: DURACAO_MINUTOS,
+          nome,
+          email,
+          telefone,
+          data: dataFormatada,
+          hora: horaSelecionada,
+          duracao: DURACAO_MINUTOS,
         }),
-        });
-        setPasso(response.ok ? "sucesso" : "erro");
+      });
+      setPasso(response.ok ? "sucesso" : "erro");
     } catch {
-        setPasso("erro");
+      setPasso("erro");
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-    };
+  };
 
   const reset = () => {
-    setPasso("data");
+    setPasso("boasVindas");
     setDataSelecionada(null);
     setHoraSelecionada(null);
     setNome("");
@@ -96,24 +102,92 @@ export function AgendarReuniao() {
 
   return (
     <div ref={containerRef} className="w-full max-w-md mx-auto">
-      {/* Badge */}
-      <div className="inline-block border-2 border-primary bg-primary/10 px-3 py-1 mb-6">
-        <span className="text-xs font-bold text-primary tracking-wide uppercase">Diagnóstico · {DURACAO_MINUTOS}min</span>
-      </div>
+      
+      {/* PASSO 0: BOAS-VINDAS */}
+      {passo === "boasVindas" && (
+        <div>
+          {/* Badge */}
+          <div className="inline-block border-2 border-primary bg-primary/10 px-3 py-1 mb-6">
+            <span className="text-xs font-bold text-primary tracking-wide uppercase">Reunião de Diagnóstico</span>
+          </div>
 
-      {/* Steps visuais */}
-      <div className="flex gap-1 mb-6">
-        {[1, 2, 3].map((n) => (
-          <div
-            key={n}
-            className={`flex-1 h-1 border ${passo === "sucesso" ? "border-green-400 bg-green-400" : n <= (passo === "data" ? 1 : passo === "hora" ? 2 : 3) ? "border-primary bg-primary" : "border-white/10"}`}
-          />
-        ))}
-      </div>
+          <h3 className="text-white font-bold text-lg mb-3">
+            Antes de começarmos<span className="text-primary">.</span>
+          </h3>
+
+          <p className="text-white/60 text-sm leading-relaxed mb-6">
+            Para garantir que encontramos a melhor solução para a sua clínica, 
+            precisamos de fazer uma breve reunião de diagnóstico de <strong className="text-white/80">20 minutos</strong>. 
+            É gratuita e sem compromisso.
+          </p>
+
+          {/* Contactos diretos */}
+          <div className="border-2 border-white/10 bg-white/[0.02] p-4 mb-6">
+            <p className="text-white/40 text-xs font-bold uppercase tracking-wider mb-3">
+              Prefere falar diretamente?
+            </p>
+            <div className="space-y-2.5">
+              <a
+                href="tel:+351928116313"
+                className="flex items-center gap-3 text-white/70 hover:text-white transition-colors text-sm"
+              >
+                <Phone size={14} className="text-primary shrink-0" />
+                +351 928 116 313
+              </a>
+              <a
+                href="https://wa.me/351928116313"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-white/70 hover:text-white transition-colors text-sm"
+              >
+                <MessageCircle size={14} className="text-green-400 shrink-0" />
+                WhatsApp
+              </a>
+              <a
+                href="mailto:gkmarcosbonifacio@gmail.com"
+                className="flex items-center gap-3 text-white/70 hover:text-white transition-colors text-sm"
+              >
+                <Mail size={14} className="text-primary shrink-0" />
+                gkmarcosbonifacio@gmail.com
+              </a>
+            </div>
+          </div>
+
+          {/* Botão para agendar */}
+          <button
+            onClick={() => setPasso("data")}
+            className="w-full bg-primary text-white font-bold py-3 border-2 border-primary hover:bg-primary/90 transition-all flex items-center justify-center gap-2 text-sm"
+          >
+            <Calendar size={14} />
+            Agendar reunião
+            <ArrowRight size={14} />
+          </button>
+        </div>
+      )}
+
+      {/* Steps visuais (só aparece depois das boas-vindas) */}
+      {passo !== "boasVindas" && passo !== "sucesso" && passo !== "erro" && (
+        <div className="flex gap-1 mb-6">
+          {[1, 2, 3].map((n) => (
+            <div
+              key={n}
+              className={`flex-1 h-1 border ${
+                n <= (passo === "data" ? 1 : passo === "hora" ? 2 : 3)
+                  ? "border-primary bg-primary"
+                  : "border-white/10"
+              }`}
+            />
+          ))}
+        </div>
+      )}
 
       {/* PASSO 1: DATA */}
       {passo === "data" && (
         <div>
+          <button onClick={() => setPasso("boasVindas")} className="text-white/40 hover:text-white text-xs font-bold mb-4 flex items-center gap-1">
+            <ChevronLeft size={12} /> Voltar
+          </button>
+
           <div className="flex items-center justify-between mb-4">
             <button onClick={() => setMesAtual(mudarMes(mesAtual, -1))} className="w-8 h-8 border-2 border-white/10 flex items-center justify-center hover:border-primary/50 transition-colors">
               <ChevronLeft size={14} className="text-white/60" />
