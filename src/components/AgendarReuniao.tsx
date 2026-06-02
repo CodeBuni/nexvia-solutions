@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import { User, Mail, Phone, ArrowRight, CheckCircle, XCircle, ChevronLeft, ChevronRight } from "lucide-react";
 
-const WEBHOOK_URL = "https://hook.eu1.make.com/1rt54lt4omk2x0d5ndv8gb1ptan5r7gg";
+const WEBHOOK_URL = "https://hook.eu1.make.com/xr98mk9r8y39xf51xyfilm5umqllqgbn";
 const DURACAO_MINUTOS = 20;
 const HORA_INICIO = 9;
 const HORA_FIM = 18;
@@ -25,7 +25,7 @@ function gerarSlots(data: Date): string[] {
 function mudarMes(data: Date, meses: number): Date {
   const nova = new Date(data.getFullYear(), data.getMonth() + meses, 1);
   return nova;
-} 
+}
 
 const DIAS_SEMANA = ["D", "S", "T", "Q", "Q", "S", "S"];
 const MESES = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
@@ -54,36 +54,42 @@ export function AgendarReuniao() {
   const hoje = new Date();
   hoje.setHours(0, 0, 0, 0);
 
-    const handleSubmit = async () => {
+  const handleSubmit = async () => {
     if (!dataSelecionada || !horaSelecionada) return;
     setLoading(true);
     
-    // Formatar a data manualmente (sem UTC)
     const ano = dataSelecionada.getFullYear();
     const mes = String(dataSelecionada.getMonth() + 1).padStart(2, '0');
     const dia = String(dataSelecionada.getDate()).padStart(2, '0');
     const dataFormatada = `${ano}-${mes}-${dia}`;
     
     try {
-        const response = await fetch(WEBHOOK_URL, {
+      const response = await fetch(WEBHOOK_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            nome,
-            email,
-            telefone,
-            data: dataFormatada,  // ← usa a data formatada manualmente
-            hora: horaSelecionada,
-            duracao: DURACAO_MINUTOS,
+          nome,
+          email,
+          telefone,
+          data: dataFormatada,
+          hora: horaSelecionada,
+          duracao: DURACAO_MINUTOS,
         }),
-        });
-        setPasso(response.ok ? "sucesso" : "erro");
+      });
+
+      if (response.status === 409) {
+        alert("Este horário já foi reservado por outra pessoa. Por favor, escolha outro horário.");
+        setPasso("hora");
+        return;
+      }
+
+      setPasso(response.ok ? "sucesso" : "erro");
     } catch {
-        setPasso("erro");
+      setPasso("erro");
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-    };
+  };
 
   const reset = () => {
     setPasso("data");
@@ -162,7 +168,7 @@ export function AgendarReuniao() {
           </button>
           <div className="grid grid-cols-4 gap-1.5">
             {gerarSlots(dataSelecionada).length === 0 ? (
-              <p className="text-white/30 text-xs col-span-4 py-4 text-center">Sem horários</p>
+              <p className="text-white/30 text-xs col-span-4 py-4 text-center">Sem horários disponíveis.</p>
             ) : (
               gerarSlots(dataSelecionada).map((hora) => (
                 <button
@@ -231,7 +237,7 @@ export function AgendarReuniao() {
             <XCircle className="w-8 h-8 text-red-400" />
           </div>
           <h3 className="text-lg font-bold text-white mb-1">Erro</h3>
-          <p className="text-white/40 text-xs mb-4">Tente novamente.</p>
+          <p className="text-white/40 text-xs mb-4">Tente novamente ou contacte-nos pelo WhatsApp.</p>
           <button onClick={reset} className="text-primary text-xs font-bold hover:underline">Tentar de novo</button>
         </div>
       )}
