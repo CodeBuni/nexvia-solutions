@@ -1,19 +1,21 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Send } from "lucide-react";
+import { Send, CheckCircle } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const WEBHOOK_URL = "https://hook.eu1.make.com/mtuy5be6xkgl2jj68qmihqwhqxlktjra";
+const WHATSAPP_NUMBER = "351928116313";
+const WHATSAPP_MESSAGE = encodeURIComponent("Olá! Gostaria de saber mais sobre os serviços da Nexvia para a minha clínica.");
 
 export function CtaFinal() {
   const containerRef = useRef<HTMLElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
-
-  const WHATSAPP_NUMBER = "351928116313";
-  const WHATSAPP_MESSAGE = encodeURIComponent("Olá! Gostaria de saber mais sobre os serviços da Nexvia para a minha clínica.");
-  const FORM_ACTION = "https://formspree.io/f/SEU_FORM_ID"; // Substituir pelo ID real
+  const [enviado, setEnviado] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -83,6 +85,41 @@ export function CtaFinal() {
     return () => ctx.revert();
   }, []);
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const form = formRef.current;
+    if (!form) return;
+
+    const formData = new FormData(form);
+    const dados = {
+      nome: formData.get("name"),
+      email: formData.get("email"),
+      tipoClinica: formData.get("clinicType"),
+      mensagem: formData.get("message"),
+      origem: "Formulário de Contacto - Site Nexvia",
+      data: new Date().toISOString(),
+    };
+
+    try {
+      const response = await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dados),
+      });
+
+      if (response.ok) {
+        setEnviado(true);
+        form.reset();
+      }
+    } catch (err) {
+      console.error("Erro ao enviar formulário:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section id="contacto" ref={containerRef} className="relative py-32 overflow-hidden">
       <div
@@ -102,72 +139,76 @@ export function CtaFinal() {
         </div>
 
         <div className="grid md:grid-cols-5 gap-12">
-          <form
-            ref={formRef}
-            action={FORM_ACTION}
-            method="POST"
-            className="md:col-span-3 space-y-6"
-          >
-            <div>
-              <label className="block text-sm font-medium mb-2 text-white/80">Nome</label>
-              <input
-                type="text"
-                name="name"
-                required
-                className="glass-input w-full"
-                placeholder="O seu nome"
-                data-testid="input-name"
-              />
+          {enviado ? (
+            <div className="md:col-span-3 flex flex-col items-center justify-center text-center py-12">
+              <CheckCircle className="w-16 h-16 text-green-400 mb-4" />
+              <h3 className="text-2xl font-bold text-white mb-2">Mensagem enviada!</h3>
+              <p className="text-white/60">Respondemos em até 24h úteis.</p>
             </div>
+          ) : (
+            <form ref={formRef} onSubmit={handleSubmit} className="md:col-span-3 space-y-6">
+              <div>
+                <label className="block text-sm font-medium mb-2 text-white/80">Nome</label>
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  className="glass-input w-full"
+                  placeholder="O seu nome"
+                  data-testid="input-name"
+                />
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-2 text-white/80">Email</label>
-              <input
-                type="email"
-                name="email"
-                required
-                className="glass-input w-full"
-                placeholder="o.seu@email.com"
-                data-testid="input-email"
-              />
-            </div>
+              <div>
+                <label className="block text-sm font-medium mb-2 text-white/80">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  className="glass-input w-full"
+                  placeholder="o.seu@email.com"
+                  data-testid="input-email"
+                />
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-2 text-white/80">Tipo de Clínica</label>
-              <select
-                name="clinicType"
-                className="glass-input w-full [&>option]:bg-card"
-                data-testid="select-clinic-type"
-                defaultValue=""
+              <div>
+                <label className="block text-sm font-medium mb-2 text-white/80">Tipo de Clínica</label>
+                <select
+                  name="clinicType"
+                  className="glass-input w-full [&>option]:bg-card"
+                  data-testid="select-clinic-type"
+                  defaultValue=""
+                >
+                  <option value="" disabled hidden>Selecione uma opção...</option>
+                  <option value="dentista">Dentista</option>
+                  <option value="estetica">Estética Médica</option>
+                  <option value="fisioterapia">Fisioterapia</option>
+                  <option value="psicologia">Psicologia</option>
+                  <option value="veterinaria">Veterinária</option>
+                  <option value="outro">Outro</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2 text-white/80">Mensagem (opcional)</label>
+                <textarea
+                  name="message"
+                  className="glass-input w-full min-h-[120px] resize-y"
+                  placeholder="Como podemos ajudar?"
+                  data-testid="input-message"
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-primary text-primary-foreground font-bold py-4 rounded-xl flex items-center justify-center gap-2 shadow-lg hover:glow-primary transition-all active:scale-[0.98] disabled:opacity-50"
+                data-testid="button-submit-contact"
               >
-                <option value="" disabled hidden>Selecione uma opção...</option>
-                <option value="dentista">Dentista</option>
-                <option value="estetica">Estética Médica</option>
-                <option value="fisioterapia">Fisioterapia</option>
-                <option value="psicologia">Psicologia</option>
-                <option value="veterinaria">Veterinária</option>
-                <option value="outro">Outro</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-2 text-white/80">Mensagem (opcional)</label>
-              <textarea
-                name="message"
-                className="glass-input w-full min-h-[120px] resize-y"
-                placeholder="Como podemos ajudar?"
-                data-testid="input-message"
-              ></textarea>
-            </div>
-
-            <button
-              type="submit"
-              className="w-full bg-primary text-primary-foreground font-bold py-4 rounded-xl flex items-center justify-center gap-2 shadow-lg hover:glow-primary transition-all active:scale-[0.98]"
-              data-testid="button-submit-contact"
-            >
-              Enviar mensagem <Send size={18} />
-            </button>
-          </form>
+                {loading ? "A enviar..." : <>Enviar mensagem <Send size={18} /></>}
+              </button>
+            </form>
+          )}
 
           <div className="md:col-span-2 flex flex-col justify-center whatsapp-card">
             <div className="bg-card/50 border border-white/10 p-8 rounded-2xl">
