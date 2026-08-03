@@ -36,16 +36,16 @@ export function Nav() {
   return (
     <nav ref={navRef} className="fixed top-0 left-0 w-full z-50 transition-all">
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2.5 relative z-10" data-testid="link-logo">
+        <Link href="/" className="flex items-center gap-3" data-testid="link-logo">
           <img
             src="/images/logo-icon.png"
-            alt=""
-            className="h-9 w-auto object-contain"
+            alt="Nexvia"
+            className="h-30 w-auto object-contain"
           />
           <img
             src="/images/logo-text.png"
             alt="Nexvia"
-            className="h-7 w-auto object-contain hidden sm:block"
+            className="h-30 w-auto object-contain hidden sm:block absolute left-1/2 -translate-x-1/2"
           />
         </Link>
 
