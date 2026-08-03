@@ -51,10 +51,10 @@ export function SocialProof() {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-24 bg-[#0c0e16] border-t border-b border-white/5">
+    <section ref={containerRef} className="py-24 bg-[#0d0d14] border-t border-b border-white/5">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="trust-el font-display text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+          <h2 className="trust-el font-display text-4xl md:text-5xl font-bold mb-4">
             Em validação. Pronto para usar.
           </h2>
           <p className="trust-el text-muted-foreground text-lg max-w-2xl mx-auto">

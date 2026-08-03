@@ -17,10 +17,10 @@ export function Nav() {
   useEffect(() => {
     if (navRef.current) {
       gsap.to(navRef.current, {
-        backgroundColor: isScrolled ? "rgba(8, 9, 14, 0.88)" : "transparent",
-        backdropFilter: isScrolled ? "blur(16px)" : "blur(0px)",
+        backgroundColor: isScrolled ? "rgba(10, 10, 15, 0.95)" : "transparent",
+        backdropFilter: isScrolled ? "blur(12px)" : "blur(0px)",
         borderBottom: isScrolled
-          ? "1px solid rgba(255,255,255,0.06)"
+          ? "1px solid rgba(255,255,255,0.05)"
           : "1px solid transparent",
         duration: 0.3,
       });
@@ -63,7 +63,7 @@ export function Nav() {
 
           <a
             href="#contacto"
-            className="neo-cta px-5 py-2.5 text-sm"
+            className="text-white bg-primary border-2 border-black px-5 py-2.5 rounded-xl font-black text-sm transition-transform duration-150 active:translate-x-[2px] active:translate-y-[2px] nav-neo-shadow"
             data-testid="link-nav-contacto"
           >
             Contacto
@@ -71,23 +71,23 @@ export function Nav() {
         </div>
 
         <button
-          className="md:hidden text-white border border-white/15 bg-white/[0.04] p-2 rounded-xl hover:border-white/30 transition-colors"
+          className="md:hidden text-white border-2 border-black bg-white/5 p-2 rounded-xl active:translate-x-[1px] active:translate-y-[1px]"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           data-testid="button-mobile-menu"
           aria-label="Menu"
         >
-          {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
       {mobileMenuOpen && (
-        <div className="absolute top-20 left-0 w-full bg-[#08090e]/95 backdrop-blur-md border-b border-white/10 py-6 px-6 flex flex-col gap-5 md:hidden shadow-[0_16px_40px_rgba(0,0,0,0.45)]">
+        <div className="absolute top-20 left-0 w-full bg-[#0A0A0F]/95 backdrop-blur-md border-b-4 border-black py-6 px-6 flex flex-col gap-6 md:hidden shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
           {links.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="text-base font-medium text-white/70 hover:text-white transition-colors"
+              className="text-lg font-medium text-white/70 hover:text-white transition-colors"
             >
               {link.label}
             </a>
@@ -96,12 +96,28 @@ export function Nav() {
           <a
             href="#contacto"
             onClick={() => setMobileMenuOpen(false)}
-            className="neo-cta text-center text-base py-3"
+            className="text-center text-lg font-black text-white bg-primary border-2 border-black py-3 rounded-xl active:translate-y-[2px] nav-neo-shadow"
           >
             Contacto
           </a>
         </div>
       )}
+
+      <style>{`
+        .nav-neo-shadow {
+          box-shadow: 4px 4px 0px 0px #030305, 4px 4px 0px 1px #4F6EF7;
+        }
+
+        .nav-neo-shadow:hover {
+          transform: translate(1px, 1px);
+          box-shadow: 3px 3px 0px 0px #030305, 3px 3px 0px 1px #4F6EF7;
+        }
+
+        .nav-neo-shadow:active {
+          transform: translate(4px, 4px);
+          box-shadow: 0px 0px 0px 0px transparent;
+        }
+      `}</style>
     </nav>
   );
 }

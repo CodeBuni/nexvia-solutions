@@ -75,9 +75,9 @@ export function Problema() {
       className="py-32 grain-bg relative border-t border-white/5"
     >
       <div className="container mx-auto px-6 max-w-5xl">
-        <h2 className="section-title font-display text-3xl md:text-5xl font-bold mb-20 text-center md:text-left tracking-tight">
+        <h2 className="section-title font-display text-3xl md:text-5xl font-extrabold mb-20 text-center md:text-left text-glow-primary">
           A maioria das clínicas{" "}
-          <span className="text-primary">perde dinheiro</span> sem saber
+          <span className="text-primary text-glow-primary">perde dinheiro</span> sem saber
         </h2>
 
         <div className="flex flex-col gap-12">
@@ -88,10 +88,10 @@ export function Problema() {
               className="flex items-start gap-6 md:gap-10 group"
             >
               <div className="decor-line flex flex-col items-center justify-center pt-2">
-                <div className="w-0.5 h-16 md:h-24 rounded-full bg-primary/80 shadow-[0_0_18px_1px_rgba(61,99,240,0.28)] mb-2" />
-                <div className="w-0.5 h-8 md:h-12 rounded-full bg-accent/70 shadow-[0_0_12px_1px_rgba(58,160,255,0.2)]" />
+                <div className="w-0.5 h-16 md:h-24 rounded-full bg-primary shadow-[0_0_16px_2px_rgba(79,110,247,0.4)] mb-2" />
+                <div className="w-0.5 h-8 md:h-12 rounded-full bg-accent shadow-[0_0_12px_1px_rgba(123,94,248,0.3)]" />
               </div>
-              <div className="font-display text-5xl md:text-7xl font-semibold text-white/10 group-hover:text-primary/35 transition-colors duration-500">
+              <div className="font-display text-5xl md:text-7xl font-bold text-white/10 group-hover:text-primary/30 transition-colors duration-500">
                 0{i + 1}
               </div>
               <p className="text-xl md:text-3xl font-medium pt-2 md:pt-4 text-foreground/80">

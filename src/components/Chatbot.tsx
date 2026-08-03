@@ -115,7 +115,7 @@ export function Chatbot({ onAgendarReuniao }: { onAgendarReuniao?: () => void })
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-primary border border-primary/80 text-white flex items-center justify-center rounded-2xl shadow-[0_12px_32px_rgba(61,99,240,0.35)] hover:brightness-110 transition-all"
+          className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-primary border-2 border-primary text-white flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(0,0,0,0.4)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.4)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
           aria-label="Abrir chat"
         >
           <MessageCircle size={24} />
@@ -123,18 +123,18 @@ export function Chatbot({ onAgendarReuniao }: { onAgendarReuniao?: () => void })
       )}
 
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-full max-w-sm sm:max-w-md h-[500px] max-h-[80vh] bg-[#08090e] border border-white/10 rounded-2xl shadow-[0_24px_60px_rgba(0,0,0,0.5)] flex flex-col overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-[#10121a]">
+        <div className="fixed bottom-6 right-6 z-50 w-full max-w-sm sm:max-w-md h-[500px] max-h-[80vh] bg-[#0A0A0F] border-2 border-white/10 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.6)] flex flex-col">
+          <div className="flex items-center justify-between px-4 py-3 border-b-2 border-white/10 bg-[#0d0d14]">
             <div className="flex items-center gap-2">
-              <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+              <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse" />
               <div className="flex items-center gap-1.5">
                 <Bot size={18} className="text-primary" />
-<span className="text-sm font-bold text-white">Nexvia Assistente</span>
+                <span className="text-sm font-bold text-white">Nexvia Assistente</span>
               </div>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="w-7 h-7 rounded-lg border border-white/10 flex items-center justify-center hover:border-white/30 transition-colors"
+              className="w-7 h-7 border border-white/10 flex items-center justify-center hover:border-white/30 transition-colors"
               aria-label="Fechar chat"
             >
               <X size={14} className="text-white/60" />
@@ -148,22 +148,22 @@ export function Chatbot({ onAgendarReuniao }: { onAgendarReuniao?: () => void })
                 className={`flex gap-2 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
               >
                 {msg.role === "assistant" && (
-                  <div className="w-7 h-7 rounded-lg border border-primary/30 bg-primary/10 flex items-center justify-center shrink-0">
+                  <div className="w-7 h-7 border border-primary/30 bg-primary/10 flex items-center justify-center shrink-0">
                     <Sparkles size={12} className="text-primary" />
                   </div>
                 )}
                 <div
-                  className={`max-w-[80%] px-3 py-2 text-sm rounded-xl ${
+                  className={`max-w-[80%] px-3 py-2 text-sm ${
                     msg.role === "user"
                       ? "bg-primary text-white"
-                      : "bg-white/[0.05] border border-white/10 text-white/80"
+                      : "bg-white/5 border border-white/10 text-white/80"
                   }`}
                 >
                   {msg.content}
                   {msg.suggestSchedule && (
                     <button
                       onClick={() => onAgendarReuniao?.()}
-                      className="mt-2 flex items-center gap-1.5 text-xs font-semibold text-primary bg-primary/10 border border-primary/30 rounded-lg px-3 py-1.5 hover:bg-primary/20 transition-colors w-full justify-center"
+                      className="mt-2 flex items-center gap-1.5 text-xs font-bold text-primary bg-primary/10 border border-primary/30 px-3 py-1.5 hover:bg-primary/20 transition-colors w-full justify-center"
                     >
                       <Calendar size={12} />
                       Agendar reunião
@@ -171,7 +171,7 @@ export function Chatbot({ onAgendarReuniao }: { onAgendarReuniao?: () => void })
                   )}
                 </div>
                 {msg.role === "user" && (
-                  <div className="w-7 h-7 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
+                  <div className="w-7 h-7 border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
                     <User size={12} className="text-white/60" />
                   </div>
                 )}

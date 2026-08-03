@@ -75,17 +75,17 @@ export function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 bg-[#08090e]"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 bg-[#0A0A0F]"
       style={{ perspective: "1200px" }}
     >
       <div
         className="absolute inset-0 z-0 hero-bg"
         style={{
           background: `
-            radial-gradient(ellipse at 18% 42%, rgba(61,99,240,0.16) 0%, transparent 52%),
-            radial-gradient(ellipse at 82% 18%, rgba(58,160,255,0.09) 0%, transparent 48%),
-            radial-gradient(ellipse at 50% 88%, rgba(56,189,248,0.06) 0%, transparent 46%),
-            linear-gradient(180deg, #08090e 0%, #0f121a 50%, #08090e 100%)
+            radial-gradient(ellipse at 20% 50%, rgba(79,110,247,0.15) 0%, transparent 50%),
+            radial-gradient(ellipse at 80% 20%, rgba(123,94,248,0.12) 0%, transparent 50%),
+            radial-gradient(ellipse at 50% 80%, rgba(0,194,255,0.08) 0%, transparent 50%),
+            linear-gradient(180deg, #0A0A0F 0%, #12121a 50%, #0A0A0F 100%)
           `,
           backgroundSize: "cover",
         }}
@@ -139,22 +139,22 @@ export function Hero() {
       >
         <p
           ref={brandRef}
-          className="font-display text-5xl md:text-7xl font-bold tracking-tight text-white opacity-0 mb-5"
+          className="font-display text-4xl md:text-6xl font-black tracking-tight text-white opacity-0 mb-4"
         >
           Nexvia
         </p>
 
         <h1
           ref={headlineRef}
-          className="font-display text-2xl md:text-4xl lg:text-5xl font-semibold leading-[1.15] mb-6 tracking-tight opacity-0 text-white/95"
+          className="font-display text-3xl md:text-5xl lg:text-6xl font-black leading-[1.1] mb-6 tracking-tight opacity-0 text-white"
         >
           VetScribe: documentação veterinária com{" "}
-          <span className="text-primary font-bold">IA</span>
+          <span className="text-primary text-glow-primary font-extrabold">IA</span>
         </h1>
 
         <p
           ref={subheadRef}
-          className="text-base md:text-lg text-muted-foreground mb-10 max-w-2xl opacity-0 font-medium leading-relaxed"
+          className="text-lg md:text-xl text-muted-foreground/90 mb-10 max-w-2xl opacity-0 font-light"
         >
           Grava a consulta, gera SOAP e relatórios automaticamente.
           {VETSCRIBE_TRIAL_MONTHS} meses grátis para clínicas. Também construímos
@@ -163,21 +163,21 @@ export function Hero() {
 
         <div
           ref={ctaRef}
-          className="flex flex-col sm:flex-row items-center gap-3 opacity-0"
+          className="flex flex-col sm:flex-row items-center gap-4 opacity-0"
         >
           <a
             href={VETSCRIBE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="neo-cta group relative inline-flex items-center justify-center gap-2 px-8 py-4 text-base md:text-lg"
+            className="group relative inline-flex items-center justify-center gap-2 px-10 py-5 font-black text-xl text-white bg-primary rounded-xl border-2 border-primary transition-transform duration-150 active:translate-x-[3px] active:translate-y-[3px] neo-brutalism-shadow"
             data-testid="button-hero-cta"
           >
             Começar {VETSCRIBE_TRIAL_MONTHS} meses grátis
-            <ExternalLink size={16} />
+            <ExternalLink size={18} />
           </a>
           <a
             href="#contacto"
-            className="neo-cta-ghost inline-flex items-center justify-center px-7 py-3.5 text-sm md:text-base"
+            className="inline-flex items-center justify-center px-8 py-4 font-bold text-base text-white/80 border-2 border-white/20 rounded-xl hover:border-white/40 hover:text-white transition-colors"
           >
             Falar com a Nexvia
           </a>
@@ -186,16 +186,16 @@ export function Hero() {
 
       <style>{`
         @keyframes heartbeat {
-          0%, 100% { transform: scale(1); opacity: 0.45; }
-          22% { transform: scale(1.03); opacity: 0.75; }
+          0%, 100% { transform: scale(1); opacity: 0.6; }
+          22% { transform: scale(1.05); opacity: 1; }
           32% { transform: scale(1.01); }
-          45% { transform: scale(1.02); opacity: 0.6; }
+          45% { transform: scale(1.03); opacity: 0.9; }
         }
 
         @keyframes heartbeatGlow {
-          0%, 100% { transform: scale(1); opacity: 0.28; }
-          22% { transform: scale(1.1); opacity: 0.55; }
-          45% { transform: scale(1.04); opacity: 0.4; }
+          0%, 100% { transform: scale(1); opacity: 0.4; }
+          22% { transform: scale(1.18); opacity: 0.9; }
+          45% { transform: scale(1.08); opacity: 0.7; }
         }
 
         @keyframes ecgPulse {
@@ -204,15 +204,33 @@ export function Hero() {
         }
 
         .animate-heartbeat {
-          animation: heartbeat 2.4s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
+          animation: heartbeat 2.2s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
         }
 
         .animate-heartbeat-glow {
-          animation: heartbeatGlow 2.4s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
+          animation: heartbeatGlow 2.2s cubic-bezier(0.215, 0.610, 0.355, 1) infinite;
         }
 
         .animate-ecg-line {
-          animation: ecgPulse 5s linear infinite;
+          animation: ecgPulse 4.5s linear infinite;
+        }
+
+        .text-glow-primary {
+          text-shadow: 0 0 40px rgba(79, 110, 247, 0.35);
+        }
+
+        .neo-brutalism-shadow {
+          box-shadow: 6px 6px 0px 0px #030305, 6px 6px 0px 2px #4F6EF7;
+        }
+
+        .neo-brutalism-shadow:hover {
+          transform: translate(2px, 2px);
+          box-shadow: 4px 4px 0px 0px #030305, 4px 4px 0px 2px #4F6EF7;
+        }
+
+        .neo-brutalism-shadow:active {
+          transform: translate(6px, 6px);
+          box-shadow: 0px 0px 0px 0px transparent;
         }
       `}</style>
     </section>

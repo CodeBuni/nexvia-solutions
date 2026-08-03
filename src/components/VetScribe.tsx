@@ -83,7 +83,7 @@ export function VetScribe() {
   }, []);
 
   return (
-    <section id="vetscribe" ref={containerRef} className="py-32 relative overflow-hidden bg-[#08090e]">
+    <section id="vetscribe" ref={containerRef} className="py-32 relative overflow-hidden bg-[#0A0A0F]">
       <div className="container mx-auto px-6">
         <div className="vet-title-group max-w-2xl mb-16">
           <p className="text-sm font-mono text-[#4DFFB4]/60 mb-4 tracking-widest uppercase">

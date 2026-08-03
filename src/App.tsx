@@ -64,10 +64,10 @@ function HomePage() {
             if (e.target === e.currentTarget) setShowScheduler(false);
           }}
         >
-          <div className="relative w-full max-w-md bg-[#08090e] border border-white/10 rounded-2xl shadow-[0_24px_60px_rgba(0,0,0,0.5)] p-6 max-h-[90vh] overflow-y-auto">
+          <div className="relative w-full max-w-md bg-[#0A0A0F] border-2 border-white/10 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.8)] p-6 max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setShowScheduler(false)}
-              className="absolute top-3 right-3 w-8 h-8 rounded-lg border border-white/10 flex items-center justify-center hover:border-primary/50 text-white/40 hover:text-white transition-colors z-10"
+              className="absolute top-3 right-3 w-8 h-8 border-2 border-white/10 flex items-center justify-center hover:border-primary/50 text-white/40 hover:text-white transition-colors z-10"
               aria-label="Fechar"
             >
               ✕
