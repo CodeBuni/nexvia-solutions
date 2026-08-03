@@ -203,7 +203,7 @@ export function CtaFinal() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-primary text-primary-foreground font-bold py-4 rounded-xl flex items-center justify-center gap-2 shadow-lg hover:glow-primary transition-all active:scale-[0.98] disabled:opacity-50"
+                className="neo-cta w-full py-4 flex items-center justify-center gap-2 disabled:opacity-50"
                 data-testid="button-submit-contact"
               >
                 {loading ? "A enviar..." : <>Enviar mensagem <Send size={18} /></>}
@@ -222,7 +222,7 @@ export function CtaFinal() {
                 href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-3 w-full bg-primary text-primary-foreground font-bold py-4 rounded-xl shadow-lg hover:glow-primary transition-all"
+                className="neo-cta flex items-center justify-center gap-3 w-full py-4"
                 data-testid="button-whatsapp"
               >
                 <FaWhatsapp size={24} /> Falar no WhatsApp

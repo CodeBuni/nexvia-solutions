@@ -31,7 +31,7 @@ export function Footer() {
   }, []);
 
   return (
-    <footer ref={footerRef} className="border-t border-white/5 bg-[#050508] pt-16 pb-8">
+    <footer ref={footerRef} className="border-t border-white/5 bg-[#06070b] pt-16 pb-8">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-12">
           <div>
