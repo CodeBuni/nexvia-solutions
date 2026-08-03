@@ -168,19 +168,19 @@ export function Pricing() {
       <section
         id="pricing"
         ref={containerRef}
-        className="relative px-6 py-32 md:py-44 bg-[#0A0A0F] overflow-hidden"
+        className="relative px-6 py-32 md:py-44 bg-[#08090e] overflow-hidden"
       >
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="geo-element absolute top-16 left-12 w-20 h-20 border-4 border-primary/20 rotate-12" />
-          <div className="geo-element absolute top-32 right-16 w-14 h-14 border-4 border-primary/20 -rotate-6" />
-          <div className="geo-element absolute bottom-24 left-20 w-24 h-24 border-4 border-primary/10 rotate-45" />
-          <div className="geo-element absolute bottom-12 right-12 w-16 h-16 border-4 border-white/10 -rotate-12" />
+          <div className="geo-element absolute top-16 left-12 w-16 h-16 border border-primary/20 rounded-xl rotate-12" />
+          <div className="geo-element absolute top-32 right-16 w-12 h-12 border border-primary/15 rounded-lg -rotate-6" />
+          <div className="geo-element absolute bottom-24 left-20 w-20 h-20 border border-primary/10 rounded-2xl rotate-45" />
+          <div className="geo-element absolute bottom-12 right-12 w-14 h-14 border border-white/10 rounded-xl -rotate-12" />
 
           <div
             ref={(el) => {
               decorationRefs.current[0] = el;
             }}
-            className="absolute top-1/4 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/20 to-transparent"
+            className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent"
           />
         </div>
 
@@ -189,22 +189,22 @@ export function Pricing() {
             <p className="pricing-kicker text-sm font-mono text-primary/70 mb-4 tracking-widest uppercase">
               Preços
             </p>
-            <h2 className="pricing-title font-display text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[1.05]">
+            <h2 className="pricing-title font-display text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.05]">
               Comece pelo VetScribe.{" "}
               <span className="text-primary">Escale com a Nexvia.</span>
             </h2>
           </div>
 
           {/* VetScribe product offer */}
-          <div className="vetscribe-price-card relative mb-20 bg-[#0d1117] border-2 border-[#4DFFB4]/30 rounded-2xl p-8 md:p-10 overflow-hidden">
+          <div className="vetscribe-price-card relative mb-20 bg-[#0d1117] border border-[#4DFFB4]/25 rounded-2xl p-8 md:p-10 overflow-hidden shadow-[0_24px_60px_rgba(0,0,0,0.35)]">
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#4DFFB4]/40 to-transparent" />
             <div className="grid md:grid-cols-[1.4fr_1fr] gap-8 items-center">
               <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-lg bg-[#4DFFB4]/10 border border-[#4DFFB4]/25 text-[#4DFFB4] text-xs font-bold uppercase tracking-wider">
+                <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full bg-[#4DFFB4]/10 border border-[#4DFFB4]/25 text-[#4DFFB4] text-xs font-semibold uppercase tracking-wider">
                   <Gift size={14} />
                   Produto · VetScribe
                 </div>
-                <h3 className="text-2xl md:text-3xl font-black text-white mb-3">
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
                   {VETSCRIBE_TRIAL_MONTHS} meses grátis para começar
                 </h3>
                 <p className="text-white/60 text-base md:text-lg mb-6 max-w-xl">
@@ -230,7 +230,7 @@ export function Pricing() {
                     href={VETSCRIBE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-4 bg-[#4DFFB4] text-black font-black rounded-xl hover:bg-[#3ddb9a] transition-all"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#4DFFB4] text-black font-bold rounded-xl hover:bg-[#3ddb9a] transition-all shadow-[0_12px_28px_rgba(77,255,180,0.2)]"
                     data-testid="button-pricing-vetscribe"
                   >
                     Começar {VETSCRIBE_TRIAL_MONTHS} meses grátis
@@ -238,7 +238,7 @@ export function Pricing() {
                   </a>
                   <button
                     onClick={() => setShowScheduler(true)}
-                    className="inline-flex items-center justify-center gap-2 px-6 py-4 border-2 border-white/15 text-white font-bold rounded-xl hover:border-white/30 transition-all"
+                    className="neo-cta-ghost inline-flex items-center justify-center gap-2 px-6 py-3.5"
                   >
                     Agendar demo
                     <Calendar size={16} />
@@ -250,7 +250,7 @@ export function Pricing() {
                 <p className="text-xs font-mono uppercase tracking-wider text-white/40 mb-2">
                   Período experimental
                 </p>
-                <p className="text-5xl font-black text-white mb-1">€0</p>
+                <p className="text-5xl font-bold text-white mb-1">€0</p>
                 <p className="text-sm text-white/50 mb-4">
                   durante {VETSCRIBE_TRIAL_MONTHS} meses
                 </p>
@@ -275,43 +275,43 @@ export function Pricing() {
             {packages.map((pkg, idx) => (
               <div
                 key={idx}
-                className={`price-card relative flex flex-col justify-between bg-[#0d0d14] rounded-xl p-8 border-4 transition-all duration-300 ${
+                className={`price-card relative flex flex-col justify-between bg-[#10121a] rounded-2xl p-8 border transition-all duration-300 ${
                   pkg.isRecommended
-                    ? "border-primary shadow-[8px_8px_0px_0px_#040407,8px_8px_0px_2px_#4F6EF7]"
-                    : "border-white/10 hover:border-white/20 shadow-[6px_6px_0px_0px_rgba(0,0,0,0.6)]"
+                    ? "border-primary/50 shadow-[0_20px_50px_rgba(61,99,240,0.18)]"
+                    : "border-white/10 hover:border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.28)]"
                 }`}
               >
                 {pkg.isRecommended && (
-                  <div className="absolute -top-5 left-6 inline-flex items-center gap-1 px-4 py-1.5 border-2 border-black bg-primary rounded-lg -rotate-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                  <div className="absolute -top-3.5 left-6 inline-flex items-center gap-1.5 px-3 py-1 border border-primary/40 bg-primary/90 rounded-full backdrop-blur-sm">
                     <Sparkles className="w-3.5 h-3.5 text-white" />
-                    <span className="text-[10px] font-black text-white tracking-wider uppercase">
-                      ⭐ MELHOR ESCOLHA
+                    <span className="text-[10px] font-bold text-white tracking-wider uppercase">
+                      Melhor escolha
                     </span>
                   </div>
                 )}
 
                 <div>
-                  <h3 className="text-2xl font-black text-white">{pkg.title}</h3>
-                  <p className="text-sm font-medium text-primary mt-1 font-mono">
+                  <h3 className="text-2xl font-bold text-white">{pkg.title}</h3>
+                  <p className="text-sm font-medium text-primary/90 mt-1 font-mono">
                     "{pkg.copy}"
                   </p>
 
                   <div className="my-6 pt-4 border-t border-white/5">
                     <div className="flex items-baseline gap-2">
-                      <span className="text-4xl font-black text-white">{pkg.setup}</span>
-                      <span className="text-xs font-bold text-white/50 uppercase font-mono">
+                      <span className="text-4xl font-bold text-white">{pkg.setup}</span>
+                      <span className="text-xs font-semibold text-white/50 uppercase font-mono">
                         Setup (Uma vez)
                       </span>
                     </div>
                     <div className="flex items-baseline gap-2 mt-2">
-                      <span className="text-2xl font-black text-white/90">{pkg.monthly}</span>
-                      <span className="text-xs font-bold text-white/50 uppercase font-mono">
+                      <span className="text-2xl font-bold text-white/90">{pkg.monthly}</span>
+                      <span className="text-xs font-semibold text-white/50 uppercase font-mono">
                         / mês
                       </span>
                     </div>
                   </div>
 
-                  <div className="text-xs font-bold text-white/40 bg-white/5 rounded-md px-3 py-2 border border-white/5 mb-6">
+                  <div className="text-xs font-medium text-white/45 bg-white/[0.04] rounded-lg px-3 py-2 border border-white/5 mb-6">
                     Target: {pkg.target}
                   </div>
 
@@ -327,10 +327,10 @@ export function Pricing() {
 
                 <button
                   onClick={() => setShowScheduler(true)}
-                  className={`w-full inline-flex items-center justify-center gap-2 py-4 font-black text-center rounded-xl border-2 transition-all active:translate-x-[2px] active:translate-y-[2px] ${
+                  className={`w-full inline-flex items-center justify-center gap-2 py-3.5 font-bold text-center rounded-xl transition-all ${
                     pkg.isRecommended
-                      ? "bg-primary text-white border-primary hover:bg-primary/90"
-                      : "bg-transparent text-white border-white/20 hover:bg-white/5"
+                      ? "neo-cta"
+                      : "neo-cta-ghost"
                   }`}
                 >
                   Selecionar Plano
@@ -342,13 +342,13 @@ export function Pricing() {
 
           <div
             ref={meetingCardRef}
-            className="relative max-w-4xl mx-auto bg-[#12121f] border-4 border-dashed border-white/20 rounded-xl p-8 md:p-12 text-center"
+            className="relative max-w-4xl mx-auto bg-[#10121a] border border-dashed border-white/15 rounded-2xl p-8 md:p-12 text-center"
           >
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 mb-6">
               <HelpCircle size={24} className="text-primary" />
             </div>
 
-            <h3 className="text-2xl md:text-3xl font-black text-white mb-3">
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
               Precisa de algo feito à medida para a sua estrutura?
             </h3>
 
@@ -361,14 +361,14 @@ export function Pricing() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-8">
               <button
                 onClick={() => setShowScheduler(true)}
-                className="inline-flex items-center gap-3 px-8 py-5 bg-primary text-white font-black text-lg rounded-xl border-2 border-primary transition-transform duration-150 active:translate-x-[3px] active:translate-y-[3px] neo-btn-shadow cursor-pointer"
+                className="neo-cta inline-flex items-center gap-3 px-7 py-4 text-base cursor-pointer"
               >
-                <Calendar size={20} />
+                <Calendar size={18} />
                 Agendar Reunião de Diagnóstico
-                <ArrowRight size={20} />
+                <ArrowRight size={18} />
               </button>
 
-              <div className="flex items-center gap-2 text-white/50 text-xs font-bold font-mono bg-white/5 px-3 py-1.5 border border-white/10 rounded-md">
+              <div className="flex items-center gap-2 text-white/50 text-xs font-semibold font-mono bg-white/[0.04] px-3 py-1.5 border border-white/10 rounded-lg">
                 <Clock size={14} className="text-primary" />
                 <span> Confirmação imediata por WhatsApp e Email </span>
               </div>
@@ -376,7 +376,7 @@ export function Pricing() {
           </div>
 
           <div className="mt-12 flex justify-center">
-            <div className="inline-flex items-center gap-3 text-white/40 text-xs md:text-sm font-medium bg-[#12121f] px-4 py-2 border border-white/10 rounded-lg">
+            <div className="inline-flex items-center gap-3 text-white/40 text-xs md:text-sm font-medium bg-[#10121a] px-4 py-2 border border-white/10 rounded-xl">
               <Shield size={16} className="text-primary" />
               <span>
                 Ao agendar, irá receber os detalhes da reunião e o link da sala
@@ -385,25 +385,11 @@ export function Pricing() {
             </div>
           </div>
         </div>
-
-        <style>{`
-          .neo-btn-shadow {
-            box-shadow: 5px 5px 0px 0px #040407, 5px 5px 0px 2px #4F6EF7;
-          }
-          .neo-btn-shadow:hover {
-            transform: translate(1px, 1px);
-            box-shadow: 4px 4px 0px 0px #040407, 4px 4px 0px 2px #4F6EF7;
-          }
-          .neo-btn-shadow:active {
-            transform: translate(5px, 5px);
-            box-shadow: 0px 0px 0px 0px transparent;
-          }
-        `}</style>
       </section>
 
       {showScheduler && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-          <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-[#0A0A0F] border-2 border-white/10 rounded-3xl p-6 shadow-2xl">
+          <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-[#08090e] border border-white/10 rounded-2xl p-6 shadow-[0_24px_60px_rgba(0,0,0,0.5)]">
             <button
               onClick={() => setShowScheduler(false)}
               className="absolute top-4 right-4 text-white/40 hover:text-white transition-colors"

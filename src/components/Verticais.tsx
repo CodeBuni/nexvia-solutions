@@ -105,7 +105,7 @@ export function Verticais() {
   return (
     <section 
       ref={containerRef} 
-      className="relative overflow-hidden bg-[#0A0A0F]"
+      className="relative overflow-hidden bg-[#08090e]"
       style={{ minHeight: "100vh" }}
     >
       <div className="flex flex-col justify-center min-h-screen py-24">
@@ -114,15 +114,15 @@ export function Verticais() {
           <p className="vert-subtitle text-xs font-mono text-primary/60 tracking-[0.15em] uppercase mb-4">
             Especialidades
           </p>
-          <h2 className="vert-title font-display text-4xl md:text-6xl font-black text-white leading-none">
+          <h2 className="vert-title font-display text-4xl md:text-6xl font-bold text-white leading-none tracking-tight">
             A sua clínica<br />também está aqui.
           </h2>
         </div>
 
         <div className="relative">
           
-          <div className="absolute left-0 top-0 bottom-0 w-12 md:w-24 bg-gradient-to-r from-[#0A0A0F] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-12 md:w-24 bg-gradient-to-l from-[#0A0A0F] to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-12 md:w-24 bg-gradient-to-r from-[#08090e] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-12 md:w-24 bg-gradient-to-l from-[#08090e] to-transparent z-10 pointer-events-none" />
 
           <div 
             ref={trackRef}
@@ -135,8 +135,9 @@ export function Verticais() {
                 className={`
                   group relative flex-shrink-0
                   w-48 md:w-56 h-56 md:h-64
-                  bg-[#0d0d14] 
-                  border-2 border-white/5
+                  bg-[#10121a] 
+                  border border-white/10
+                  rounded-2xl
                   hover:border-primary/40
                   transition-all duration-300
                   flex flex-col items-center justify-center
@@ -153,8 +154,7 @@ export function Verticais() {
                   {spec.name}
                 </h3>
 
-                <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                <div className="absolute -bottom-2 -right-2 w-full h-full border-2 border-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-2xl" />
               </div>
             ))}
           </div>

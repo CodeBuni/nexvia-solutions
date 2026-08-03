@@ -84,11 +84,11 @@ export function Solucao() {
   ];
 
   return (
-    <section id="servicos" ref={containerRef} className="py-32 relative bg-[#0d0d14]">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-64 bg-primary/10 blur-[100px] rounded-full pointer-events-none" />
+    <section id="servicos" ref={containerRef} className="py-32 relative bg-[#0c0e16]">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-64 bg-primary/8 blur-[100px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">
-        <h2 className="solucao-title font-display text-4xl md:text-5xl font-bold mb-16 text-center">
+        <h2 className="solucao-title font-display text-4xl md:text-5xl font-bold mb-16 text-center tracking-tight">
           O que a Nexvia faz por si
         </h2>
 
