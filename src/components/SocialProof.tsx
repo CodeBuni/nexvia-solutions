@@ -1,25 +1,26 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Shield, Zap, HeadphonesIcon } from "lucide-react";
+import { Shield, FlaskConical, HeadphonesIcon } from "lucide-react";
+import { VETSCRIBE_TRIAL_MONTHS } from "../lib/constants";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const trustItems = [
   {
-    icon: <Zap className="w-6 h-6 text-primary" />,
-    title: "Automação real",
-    desc: "Sistemas que trabalham 24/7 pela sua clínica.",
+    icon: <FlaskConical className="w-6 h-6 text-primary" />,
+    title: "Piloto com clínicas reais",
+    desc: "O VetScribe está a ser testado em clínicas selecionadas antes da escala comercial.",
   },
   {
     icon: <Shield className="w-6 h-6 text-primary" />,
-    title: "Foco em saúde privada",
-    desc: "Especialistas no setor. Conhecemos os seus desafios.",
+    title: `${VETSCRIBE_TRIAL_MONTHS} meses grátis`,
+    desc: "Comece sem risco: período inicial gratuito para validar o fluxo na sua clínica.",
   },
   {
     icon: <HeadphonesIcon className="w-6 h-6 text-primary" />,
     title: "Suporte próximo",
-    desc: "Fale connosco diretamente. Sem bots, sem tickets.",
+    desc: "Fale connosco diretamente. Acompanhamos a adoção e o feedback do piloto.",
   },
 ];
 
@@ -54,18 +55,18 @@ export function SocialProof() {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="trust-el font-display text-4xl md:text-5xl font-bold mb-4">
-            Construímos com transparência.
+            Em validação. Pronto para usar.
           </h2>
           <p className="trust-el text-muted-foreground text-lg max-w-2xl mx-auto">
-            Não mostramos casos de sucesso porque cada projeto é confidencial. 
-            Mostramos como trabalhamos.
+            Estamos a validar o VetScribe com clínicas escolhidas — e abrimos o
+            acesso com {VETSCRIBE_TRIAL_MONTHS} meses grátis para quem quiser começar agora.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {trustItems.map((item, i) => (
-            <div 
-              key={i} 
+            <div
+              key={i}
               className="trust-el p-8 rounded-2xl bg-card/50 border border-white/5 hover:border-primary/20 transition-all text-center group"
             >
               <div className="p-4 rounded-xl bg-primary/10 inline-flex mb-4 group-hover:scale-110 transition-transform duration-300">

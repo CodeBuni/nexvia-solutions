@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Route, Switch } from "wouter";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Nav } from "./components/Nav";
@@ -14,16 +15,16 @@ import { Footer } from "./components/Footer";
 import { CustomCursor } from "./components/CustomCursor";
 import { Chatbot } from "./components/Chatbot";
 import { AgendarReuniao } from "./components/AgendarReuniao";
+import { PrivacidadePage, TermosPage } from "./pages/LegalPage";
 
 import "./components/ui/cursor-hover-effect";
 import { useCinematicScroll } from "./hooks/useCinematicScroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function App() {
+function HomePage() {
   const [showScheduler, setShowScheduler] = useState(false);
-  
-  // Scroll suave + sincronização com ScrollTrigger
+
   useCinematicScroll();
 
   useEffect(() => {
@@ -32,7 +33,6 @@ export default function App() {
     return () => window.removeEventListener("resize", onRefresh);
   }, []);
 
-  // Fechar modal com Escape
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") setShowScheduler(false);
@@ -57,7 +57,6 @@ export default function App() {
       </main>
       <Footer />
 
-      {/* Modal de Agendamento */}
       {showScheduler && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
@@ -78,8 +77,17 @@ export default function App() {
         </div>
       )}
 
-      {/* Chatbot sempre presente */}
       <Chatbot onAgendarReuniao={() => setShowScheduler(true)} />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Switch>
+      <Route path="/privacidade" component={PrivacidadePage} />
+      <Route path="/termos" component={TermosPage} />
+      <Route path="/" component={HomePage} />
+    </Switch>
   );
 }

@@ -1,8 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRight, Clock, Check, HelpCircle, Calendar, Shield, Sparkles, X } from "lucide-react";
-import { AgendarReuniao } from "./AgendarReuniao"; // componente que criaste antes
+import {
+  ArrowRight,
+  Clock,
+  Check,
+  HelpCircle,
+  Calendar,
+  Shield,
+  Sparkles,
+  X,
+  ExternalLink,
+  Gift,
+} from "lucide-react";
+import { AgendarReuniao } from "./AgendarReuniao";
+import { VETSCRIBE_TRIAL_MONTHS, VETSCRIBE_URL } from "../lib/constants";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,13 +31,13 @@ export function Pricing() {
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        [".pricing-kicker", ".pricing-title"],
+        [".pricing-kicker", ".pricing-title", ".vetscribe-price-card"],
         { opacity: 0, y: 30 },
         {
           opacity: 1,
           y: 0,
           duration: 0.8,
-          stagger: 0.15,
+          stagger: 0.12,
           ease: "power3.out",
           scrollTrigger: { trigger: container, start: "top 75%" },
         }
@@ -158,7 +170,6 @@ export function Pricing() {
         ref={containerRef}
         className="relative px-6 py-32 md:py-44 bg-[#0A0A0F] overflow-hidden"
       >
-        {/* Elementos Geométricos de Fundo */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="geo-element absolute top-16 left-12 w-20 h-20 border-4 border-primary/20 rotate-12" />
           <div className="geo-element absolute top-32 right-16 w-14 h-14 border-4 border-primary/20 -rotate-6" />
@@ -174,15 +185,92 @@ export function Pricing() {
         </div>
 
         <div className="mx-auto max-w-7xl relative z-10">
-          {/* Cabeçalho */}
-          <div className="mb-20 text-center lg:text-left">
+          <div className="mb-12 text-center lg:text-left">
+            <p className="pricing-kicker text-sm font-mono text-primary/70 mb-4 tracking-widest uppercase">
+              Preços
+            </p>
             <h2 className="pricing-title font-display text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[1.05]">
-              Planos adaptados ao <br className="hidden md:inline" />
-              <span className="text-primary">estágio da sua clínica.</span>
+              Comece pelo VetScribe.{" "}
+              <span className="text-primary">Escale com a Nexvia.</span>
             </h2>
           </div>
 
-          {/* Grid de 3 Pacotes */}
+          {/* VetScribe product offer */}
+          <div className="vetscribe-price-card relative mb-20 bg-[#0d1117] border-2 border-[#4DFFB4]/30 rounded-2xl p-8 md:p-10 overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#4DFFB4]/40 to-transparent" />
+            <div className="grid md:grid-cols-[1.4fr_1fr] gap-8 items-center">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-lg bg-[#4DFFB4]/10 border border-[#4DFFB4]/25 text-[#4DFFB4] text-xs font-bold uppercase tracking-wider">
+                  <Gift size={14} />
+                  Produto · VetScribe
+                </div>
+                <h3 className="text-2xl md:text-3xl font-black text-white mb-3">
+                  {VETSCRIBE_TRIAL_MONTHS} meses grátis para começar
+                </h3>
+                <p className="text-white/60 text-base md:text-lg mb-6 max-w-xl">
+                  Em teste com clínicas selecionadas — e disponível para a sua
+                  clínica com período inicial gratuito. Depois do trial, o plano
+                  comercial é definido connosco (sem surpresas).
+                </p>
+                <ul className="space-y-2 mb-8">
+                  {[
+                    "Prontuário SOAP gerado por IA",
+                    "Relatórios para tutores e atestados",
+                    "Templates personalizáveis",
+                    "Acesso imediato à app",
+                  ].map((f) => (
+                    <li key={f} className="flex items-start gap-3 text-sm text-white/70">
+                      <Check size={16} className="text-[#4DFFB4] shrink-0 mt-0.5" />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <a
+                    href={VETSCRIBE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-4 bg-[#4DFFB4] text-black font-black rounded-xl hover:bg-[#3ddb9a] transition-all"
+                    data-testid="button-pricing-vetscribe"
+                  >
+                    Começar {VETSCRIBE_TRIAL_MONTHS} meses grátis
+                    <ExternalLink size={16} />
+                  </a>
+                  <button
+                    onClick={() => setShowScheduler(true)}
+                    className="inline-flex items-center justify-center gap-2 px-6 py-4 border-2 border-white/15 text-white font-bold rounded-xl hover:border-white/30 transition-all"
+                  >
+                    Agendar demo
+                    <Calendar size={16} />
+                  </button>
+                </div>
+              </div>
+
+              <div className="bg-white/[0.03] border border-white/10 rounded-xl p-6 text-center md:text-left">
+                <p className="text-xs font-mono uppercase tracking-wider text-white/40 mb-2">
+                  Período experimental
+                </p>
+                <p className="text-5xl font-black text-white mb-1">€0</p>
+                <p className="text-sm text-white/50 mb-4">
+                  durante {VETSCRIBE_TRIAL_MONTHS} meses
+                </p>
+                <p className="text-xs text-white/40 leading-relaxed">
+                  Sem cartão obrigatório no site. Após o período gratuito,
+                  contactamo-lo para o plano adequado à sua clínica.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-10">
+            <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-2">
+              Serviços de automação para clínicas
+            </h3>
+            <p className="text-white/50 text-sm md:text-base">
+              Planos de referência para websites e automação — à parte do VetScribe.
+            </p>
+          </div>
+
           <div ref={cardsContainerRef} className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-20">
             {packages.map((pkg, idx) => (
               <div
@@ -196,22 +284,30 @@ export function Pricing() {
                 {pkg.isRecommended && (
                   <div className="absolute -top-5 left-6 inline-flex items-center gap-1 px-4 py-1.5 border-2 border-black bg-primary rounded-lg -rotate-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                     <Sparkles className="w-3.5 h-3.5 text-white" />
-                    <span className="text-[10px] font-black text-white tracking-wider uppercase">⭐ MELHOR ESCOLHA</span>
+                    <span className="text-[10px] font-black text-white tracking-wider uppercase">
+                      ⭐ MELHOR ESCOLHA
+                    </span>
                   </div>
                 )}
 
                 <div>
                   <h3 className="text-2xl font-black text-white">{pkg.title}</h3>
-                  <p className="text-sm font-medium text-primary mt-1 font-mono">"{pkg.copy}"</p>
+                  <p className="text-sm font-medium text-primary mt-1 font-mono">
+                    "{pkg.copy}"
+                  </p>
 
                   <div className="my-6 pt-4 border-t border-white/5">
                     <div className="flex items-baseline gap-2">
                       <span className="text-4xl font-black text-white">{pkg.setup}</span>
-                      <span className="text-xs font-bold text-white/50 uppercase font-mono">Setup (Uma vez)</span>
+                      <span className="text-xs font-bold text-white/50 uppercase font-mono">
+                        Setup (Uma vez)
+                      </span>
                     </div>
                     <div className="flex items-baseline gap-2 mt-2">
                       <span className="text-2xl font-black text-white/90">{pkg.monthly}</span>
-                      <span className="text-xs font-bold text-white/50 uppercase font-mono">/ mês</span>
+                      <span className="text-xs font-bold text-white/50 uppercase font-mono">
+                        / mês
+                      </span>
                     </div>
                   </div>
 
@@ -229,7 +325,6 @@ export function Pricing() {
                   </ul>
                 </div>
 
-                {/* Botão que abre o agendamento */}
                 <button
                   onClick={() => setShowScheduler(true)}
                   className={`w-full inline-flex items-center justify-center gap-2 py-4 font-black text-center rounded-xl border-2 transition-all active:translate-x-[2px] active:translate-y-[2px] ${
@@ -245,7 +340,6 @@ export function Pricing() {
             ))}
           </div>
 
-          {/* Bloco de Aviso / Reunião Customizada */}
           <div
             ref={meetingCardRef}
             className="relative max-w-4xl mx-auto bg-[#12121f] border-4 border-dashed border-white/20 rounded-xl p-8 md:p-12 text-center"
@@ -259,9 +353,9 @@ export function Pricing() {
             </h3>
 
             <p className="text-white/60 text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
-              Estes pacotes servem como exemplos de referência base. Reconhecemos que cada clínica opera com fluxos,
-              dimensões e sistemas legados diferentes. É altamente recomendado agendarmos uma reunião rápida para
-              avaliar as suas necessidades específicas e desenhar um orçamento cirúrgico.
+              Estes pacotes servem como exemplos de referência base. É
+              recomendado agendar uma reunião rápida para avaliar necessidades e
+              desenhar um orçamento cirúrgico.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-8">
@@ -281,11 +375,13 @@ export function Pricing() {
             </div>
           </div>
 
-          {/* Rodapé sutil da secção */}
           <div className="mt-12 flex justify-center">
             <div className="inline-flex items-center gap-3 text-white/40 text-xs md:text-sm font-medium bg-[#12121f] px-4 py-2 border border-white/10 rounded-lg">
               <Shield size={16} className="text-primary" />
-              <span>Ao agendar, irá receber os detalhes da reunião e o link da sala instantaneamente.</span>
+              <span>
+                Ao agendar, irá receber os detalhes da reunião e o link da sala
+                instantaneamente.
+              </span>
             </div>
           </div>
         </div>
@@ -305,13 +401,13 @@ export function Pricing() {
         `}</style>
       </section>
 
-      {/* Modal do Agendamento */}
       {showScheduler && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
           <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-[#0A0A0F] border-2 border-white/10 rounded-3xl p-6 shadow-2xl">
             <button
               onClick={() => setShowScheduler(false)}
               className="absolute top-4 right-4 text-white/40 hover:text-white transition-colors"
+              aria-label="Fechar"
             >
               <X size={24} />
             </button>

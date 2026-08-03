@@ -3,12 +3,13 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Send, CheckCircle } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
+import { CONTACT, VETSCRIBE_TRIAL_MONTHS } from "../lib/constants";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const WEBHOOK_URL = "https://hook.eu1.make.com/mtuy5be6xkgl2jj68qmihqwhqxlktjra";
-const WHATSAPP_NUMBER = "351928116313";
-const WHATSAPP_MESSAGE = encodeURIComponent("Olá! Gostaria de saber mais sobre os serviços da Nexvia para a minha clínica.");
+const WHATSAPP_NUMBER = CONTACT.phoneE164;
+const WHATSAPP_MESSAGE = CONTACT.whatsappMessage;
 
 export function CtaFinal() {
   const containerRef = useRef<HTMLElement>(null);
@@ -131,10 +132,10 @@ export function CtaFinal() {
       <div className="container mx-auto px-6 relative z-10 max-w-4xl">
         <div className="text-center mb-16">
           <h2 className="cta-title font-display text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-            A sua clínica pode crescer de forma previsível.
+            Pronto para o VetScribe — ou para automatizar a clínica.
           </h2>
           <p className="cta-sub text-xl md:text-2xl text-muted-foreground">
-            Fale connosco. Sem compromisso.
+            {VETSCRIBE_TRIAL_MONTHS} meses grátis no VetScribe. Fale connosco sem compromisso.
           </p>
         </div>
 

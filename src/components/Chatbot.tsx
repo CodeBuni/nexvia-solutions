@@ -1,58 +1,58 @@
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Bot, User, Calendar, Sparkles, Loader2 } from "lucide-react";
+import {
+  MessageCircle,
+  X,
+  Send,
+  Bot,
+  User,
+  Calendar,
+  Sparkles,
+  Loader2,
+} from "lucide-react";
+import {
+  CONTACT,
+  VETSCRIBE_TRIAL_MONTHS,
+  VETSCRIBE_URL,
+} from "../lib/constants";
 
-const OPENAI_API_KEY = "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"; // Substitui pela tua key real
+const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
 const OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
 
-// Sistema prompt que define o comportamento da IA
 const SYSTEM_PROMPT = `Tu és o assistente virtual da Nexvia, uma empresa portuguesa de automação e tecnologia para clínicas de saúde privada.
 
 **CONTEXTO DA EMPRESA:**
-- Site: nexvia.pt (ou o domínio real)
-- Contacto: +351 928 116 313
-- Email: gkmarcosbonifacio@gmail.com
+- Contacto: ${CONTACT.phoneDisplay}
+- Email: ${CONTACT.email}
 - Especialidades: clínicas dentárias, estética médica, fisioterapia, psicologia, veterinária, e outras.
 
-**SERVIÇOS E PREÇOS:**
+**PRODUTO PRINCIPAL — VetScribe:**
+- IA para clínicas veterinárias que gera prontuários SOAP, relatórios para tutores e atestados.
+- Em teste com clínicas selecionadas.
+- ${VETSCRIBE_TRIAL_MONTHS} meses grátis para começar.
+- App: ${VETSCRIBE_URL}
+- Depois do período gratuito, o plano comercial é acordado com a Nexvia.
+
+**SERVIÇOS E PREÇOS (à parte do VetScribe):**
 
 Plano Website — €497 (setup único)
-- Website informativo de 5 páginas
-- Design responsivo
-- Integração Google Maps
-- Botão WhatsApp
-- SSL + Hosting 12 meses
+- Website informativo de 5 páginas, design responsivo, Maps, WhatsApp, SSL + Hosting 12 meses
 
 Plano Automação Profissional — €1.180 setup + €350/mês
-- Website premium personalizado
-- Chatbot com IA (WhatsApp + email)
-- Agendamento automático
-- Lembretes SMS/email
-- Follow-up pós-consulta
-- Dashboard de KPIs
-- Suporte 5 dias/semana
-- SEO local + 2 atualizações/mês
+- Website premium, chatbot IA, agendamento, lembretes, follow-up, KPIs, suporte 5 dias/semana
 
 Plano Enterprise — €4.397 setup + €1.400/mês
-- Software SaaS personalizado
-- Múltiplas integrações
-- API custom
-- Analytics avançado
-- Consultor dedicado 1h/semana
-- Customizações ilimitadas
-
-**PRODUTO:**
-- VetScribe: IA para clínicas veterinárias que gera prontuários SOAP automaticamente.
-  Disponível em: https://meeting-humanizer-v2.vercel.app/
+- Software SaaS personalizado, integrações, analytics, consultor dedicado
 
 **REGRAS DE COMPORTAMENTO:**
 1. Responde sempre em português de Portugal.
 2. Sê amigável, profissional e direto.
-3. Se a pessoa perguntar sobre preços, mostra os 3 planos resumidamente.
-4. Se a pessoa mostrar interesse em agendar reunião, responde com entusiasmo e inclui a frase exata: "[AGENDAR_REUNIAO]"
-5. Se a pessoa disser palavras como "agendar", "reunião", "falar", "saber mais", "proposta", sugere ativamente agendar uma reunião de diagnóstico gratuita de 20 minutos.
-6. Mantém as respostas curtas (2-4 frases) a menos que a pessoa peça detalhes.
-7. Não inventas preços nem serviços que não existem.
-8. Se não souberes algo, diz honestamente e sugere agendar uma reunião para esclarecer.`;
+3. Prioriza o VetScribe quando a pessoa for de veterinária ou perguntar por produto.
+4. Se perguntarem preços de serviços, resume os 3 planos.
+5. Se mostrarem interesse em agendar, inclui a frase exata: "[AGENDAR_REUNIAO]"
+6. Se disserem "agendar", "reunião", "falar", "saber mais", "proposta", sugere reunião de diagnóstico gratuita de 20 minutos.
+7. Mantém respostas curtas (2-4 frases), salvo pedido de detalhe.
+8. Não inventes preços do VetScribe mensal — diz ${VETSCRIBE_TRIAL_MONTHS} meses grátis e depois acordo comercial.
+9. Se não souberes, sugere agendar reunião.`;
 
 interface Message {
   role: "user" | "assistant" | "system";
@@ -62,19 +62,20 @@ interface Message {
 export function Chatbot({ onAgendarReuniao }: { onAgendarReuniao?: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: "assistant", content: "Olá! 👋 Sou o assistente virtual da Nexvia. Como posso ajudar? Posso falar sobre preços, serviços ou agendar uma reunião de diagnóstico gratuita para si." },
+    {
+      role: "assistant",
+      content: `Olá! Sou o assistente da Nexvia. Posso ajudar com o VetScribe (${VETSCRIBE_TRIAL_MONTHS} meses grátis), preços de serviços ou agendar uma reunião de diagnóstico.`,
+    },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Auto-scroll para a última mensagem
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Focar input quando abre
   useEffect(() => {
     if (isOpen) inputRef.current?.focus();
   }, [isOpen]);
@@ -87,6 +88,18 @@ export function Chatbot({ onAgendarReuniao }: { onAgendarReuniao?: () => void })
     setInput("");
     setLoading(true);
 
+    if (!OPENAI_API_KEY) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: `O chat IA está temporariamente indisponível. Pode experimentar o VetScribe em ${VETSCRIBE_URL}, escrever para ${CONTACT.email} ou ligar ${CONTACT.phoneDisplay}. Se preferir, posso abrir o agendamento. [AGENDAR_REUNIAO]`,
+        },
+      ]);
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await fetch(OPENAI_API_URL, {
         method: "POST",
@@ -98,7 +111,7 @@ export function Chatbot({ onAgendarReuniao }: { onAgendarReuniao?: () => void })
           model: "gpt-4o-mini",
           messages: [
             { role: "system", content: SYSTEM_PROMPT },
-            ...messages.slice(-10), // últimas 10 mensagens para contexto
+            ...messages.slice(-10),
             userMessage,
           ],
           max_tokens: 500,
@@ -107,12 +120,15 @@ export function Chatbot({ onAgendarReuniao }: { onAgendarReuniao?: () => void })
       });
 
       const data = await response.json();
-      const assistantContent = data.choices?.[0]?.message?.content || "Desculpa, estou com dificuldades. Tenta novamente.";
+      const assistantContent =
+        data.choices?.[0]?.message?.content ||
+        "Desculpa, estou com dificuldades. Tenta novamente.";
 
-      const assistantMessage: Message = { role: "assistant", content: assistantContent };
-      setMessages((prev) => [...prev, assistantMessage]);
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: assistantContent },
+      ]);
 
-      // Verificar se a IA sugeriu agendar reunião
       if (assistantContent.includes("[AGENDAR_REUNIAO]")) {
         setTimeout(() => {
           onAgendarReuniao?.();
@@ -122,7 +138,10 @@ export function Chatbot({ onAgendarReuniao }: { onAgendarReuniao?: () => void })
       console.error("Erro no chatbot:", error);
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: "Tive um problema técnico. Podes tentar novamente ou ligar para +351 928 116 313." },
+        {
+          role: "assistant",
+          content: `Tive um problema técnico. Pode ligar para ${CONTACT.phoneDisplay} ou experimentar o VetScribe: ${VETSCRIBE_URL}`,
+        },
       ]);
     } finally {
       setLoading(false);
@@ -138,7 +157,6 @@ export function Chatbot({ onAgendarReuniao }: { onAgendarReuniao?: () => void })
 
   return (
     <>
-      {/* Botão flutuante */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
@@ -149,11 +167,8 @@ export function Chatbot({ onAgendarReuniao }: { onAgendarReuniao?: () => void })
         </button>
       )}
 
-      {/* Janela do chat */}
       {isOpen && (
         <div className="fixed bottom-6 right-6 z-50 w-full max-w-sm sm:max-w-md h-[500px] max-h-[80vh] bg-[#0A0A0F] border-2 border-white/10 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.6)] flex flex-col">
-          
-          {/* Cabeçalho */}
           <div className="flex items-center justify-between px-4 py-3 border-b-2 border-white/10 bg-[#0d0d14]">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse" />
@@ -165,12 +180,12 @@ export function Chatbot({ onAgendarReuniao }: { onAgendarReuniao?: () => void })
             <button
               onClick={() => setIsOpen(false)}
               className="w-7 h-7 border border-white/10 flex items-center justify-center hover:border-white/30 transition-colors"
+              aria-label="Fechar chat"
             >
               <X size={14} className="text-white/60" />
             </button>
           </div>
 
-          {/* Mensagens */}
           <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
             {messages.map((msg, i) => (
               <div
@@ -221,7 +236,6 @@ export function Chatbot({ onAgendarReuniao }: { onAgendarReuniao?: () => void })
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input */}
           <div className="p-3 border-t-2 border-white/10 bg-[#0d0d14]">
             <div className="flex gap-2">
               <input
@@ -238,12 +252,13 @@ export function Chatbot({ onAgendarReuniao }: { onAgendarReuniao?: () => void })
                 onClick={sendMessage}
                 disabled={!input.trim() || loading}
                 className="w-10 h-10 bg-primary border-2 border-primary flex items-center justify-center hover:bg-primary/90 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                aria-label="Enviar"
               >
                 <Send size={16} className="text-white" />
               </button>
             </div>
             <p className="text-[10px] text-white/20 mt-2 text-center">
-              Assistente IA · Podes pedir para agendar uma reunião
+              Assistente IA · VetScribe · Agendamento
             </p>
           </div>
         </div>

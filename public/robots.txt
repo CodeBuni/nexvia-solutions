@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nexvia-solutions.vercel.app/sitemap.xml
